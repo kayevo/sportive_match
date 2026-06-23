@@ -1,2 +1,2 @@
 # sportive_match
-An app to create random teams. Eliminating judgments and increasing inclusion in society.
+An app that creates random teams, reducing judgment and promoting inclusion in society.
