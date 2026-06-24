@@ -1,4 +1,4 @@
-package com.kayevo.sportive_match.ui.theme
+package com.kayevo.sportive_match.platform.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

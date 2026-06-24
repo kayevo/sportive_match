@@ -1,6 +1,5 @@
-package com.kayevo.sportive_match.ui.theme
+package com.kayevo.sportive_match.platform.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
