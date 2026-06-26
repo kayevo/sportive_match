@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -25,11 +26,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.kayevo.sportive_match.platform.ui.theme.Sportive_matchTheme
-import androidx.compose.foundation.lazy.items
 
 @SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true)
@@ -38,9 +37,13 @@ fun GenerateTeamMatchScreenPreview() {
     Sportive_matchTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val navController = rememberNavController()
+            val viewModel = GenerateTeamMatchVM()
+
             GenerateTeamMatchScreen(
-                navController,
-                GenerateTeamMatchVM(),
+                navController = navController,
+                processIntent = viewModel::processIntent,
+                sentCandidates = "Name A, Name B",
+                candidates = listOf("Name A", "Name B"),
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -50,10 +53,11 @@ fun GenerateTeamMatchScreenPreview() {
 @Composable
 fun GenerateTeamMatchScreen(
     navController: NavController,
-    viewModel: GenerateTeamMatchVM,
+    processIntent: (GenerateTeamMatchIntent) -> Unit,
+    sentCandidates: String,
+    candidates: List<String>,
     modifier: Modifier = Modifier
 ) {
-    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
     val team1 = listOf("Name 1", "Name 2")
     val team2 = listOf("Name 3")
     val nextToPlay = listOf("Name 4")
@@ -78,9 +82,9 @@ fun GenerateTeamMatchScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextField(
-            value = uiState.value.sentCandidates,
-            onValueChange = { candidates ->
-                viewModel.processIntent(GenerateTeamMatchIntent.ChangeCandidates(candidates))
+            value = sentCandidates,
+            onValueChange = { newSentCandidates ->
+                processIntent(GenerateTeamMatchIntent.ChangeCandidates(newSentCandidates))
             },
             label = { Text("Sent candidates") },
             placeholder = {
@@ -103,11 +107,17 @@ fun GenerateTeamMatchScreen(
                     style = MaterialTheme.typography.titleMedium
                 )
 
-                Spacer(modifier = Modifier.fillMaxWidth().height(8.dp))
+                Spacer(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(8.dp))
 
-                LazyColumn(Modifier.fillMaxWidth().height(100.dp)) {
-                    items(uiState.value.candidates) { candidates ->
-                        Text("• $candidates")
+                LazyColumn(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                ) {
+                    items(candidates) { candidate ->
+                        Text("• $candidate")
                     }
                 }
             }

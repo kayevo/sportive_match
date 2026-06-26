@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -41,9 +42,13 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(Screen.GenerateTeamMatch.route) {
+                            val uiState = generateTeamMatchVM.uiState.collectAsStateWithLifecycle()
+
                             GenerateTeamMatchScreen(
-                                navController,
-                                generateTeamMatchVM,
+                                navController = navController,
+                                processIntent = generateTeamMatchVM::processIntent,
+                                sentCandidates = uiState.value.sentCandidates,
+                                candidates = uiState.value.candidates,
                                 modifier = Modifier.padding(innerPadding)
                             )
                         }
