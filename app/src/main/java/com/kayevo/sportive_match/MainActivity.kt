@@ -49,6 +49,9 @@ class MainActivity : ComponentActivity() {
                                 processIntent = generateTeamMatchVM::processIntent,
                                 sentCandidates = uiState.value.sentCandidates,
                                 candidates = uiState.value.candidates,
+                                team1 = uiState.value.team1,
+                                team2 = uiState.value.team2,
+                                nextCandidates = uiState.value.nextCandidates,
                                 modifier = Modifier.padding(innerPadding)
                             )
                         }

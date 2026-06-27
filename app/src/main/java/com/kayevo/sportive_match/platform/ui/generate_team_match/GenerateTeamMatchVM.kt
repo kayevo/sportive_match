@@ -42,7 +42,30 @@ class GenerateTeamMatchVM : ViewModel() {
         .filter { it.isNotEmpty() }
 
     private fun generateTeams() {
-        // TODO generate teams.
+        val team1 = mutableListOf<String>()
+        val team2 = mutableListOf<String>()
+        val nextCandidates = mutableListOf<String>()
+        var addInTeam1 = true
+
+        _uiState.value.candidates.forEach { candidate ->
+            if (team2.size <= 4) {
+                if (addInTeam1) team1.add(candidate)
+                else team2.add(candidate)
+
+                addInTeam1 = !addInTeam1
+            } else {
+                nextCandidates.add(candidate)
+            }
+        }
+
+
+        _uiState.update { currentState ->
+            currentState.copy(
+                team1 = team1,
+                team2 = team2,
+                nextCandidates = nextCandidates
+            )
+        }
     }
 }
 

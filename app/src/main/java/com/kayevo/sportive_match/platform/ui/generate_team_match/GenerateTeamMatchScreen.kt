@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -30,6 +33,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.kayevo.sportive_match.platform.ui.theme.Sportive_matchTheme
 
+val blueBallEmoji = "\uD83D\uDD35"
+val greenBallEmoji = "\uD83D\uDFE2"
+val nextEmoji = "⏭"
+
 @SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true)
 @Composable
@@ -42,8 +49,11 @@ fun GenerateTeamMatchScreenPreview() {
             GenerateTeamMatchScreen(
                 navController = navController,
                 processIntent = viewModel::processIntent,
-                sentCandidates = "Name A, Name B",
-                candidates = listOf("Name A", "Name B"),
+                sentCandidates = "Name A, Name B, Name C, Name D, Name E",
+                candidates = listOf("Name A", "Name B", "Name C", "Name D", "Name E"),
+                team1 = listOf("Name A", "Name B"),
+                team2 = listOf("Name C", "Name D"),
+                nextCandidates = listOf("Name A", "Name B", "Name C", "Name D", "Name E"),
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -56,15 +66,11 @@ fun GenerateTeamMatchScreen(
     processIntent: (GenerateTeamMatchIntent) -> Unit,
     sentCandidates: String,
     candidates: List<String>,
+    team1: List<String>,
+    team2: List<String>,
+    nextCandidates: List<String>,
     modifier: Modifier = Modifier
 ) {
-    val team1 = listOf("Name 1", "Name 2")
-    val team2 = listOf("Name 3")
-    val nextToPlay = listOf("Name 4")
-    val blueBallEmoji = "\uD83D\uDD35"
-    val greenBallEmoji = "\uD83D\uDFE2"
-    val nextEmoji = "⏭"
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -107,14 +113,17 @@ fun GenerateTeamMatchScreen(
                     style = MaterialTheme.typography.titleMedium
                 )
 
-                Spacer(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(8.dp))
-
-                LazyColumn(
-                    Modifier
+                Spacer(
+                    modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp)
+                        .height(8.dp)
+                )
+
+                LazyVerticalGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(80.dp),
+                    columns = GridCells.Fixed(2)
                 ) {
                     items(candidates) { candidate ->
                         Text("• $candidate")
@@ -151,14 +160,20 @@ fun GenerateTeamMatchScreen(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Text(
-                    text = "$nextEmoji Next to Play",
+                    text = "$nextEmoji Next candidates.",
                     style = MaterialTheme.typography.titleMedium
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                nextToPlay.forEach { player ->
-                    Text("• $player")
+                LazyRow(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                ) {
+                    items(nextCandidates) { player ->
+                        Text("• $player")
+                    }
                 }
             }
         }
@@ -167,7 +182,7 @@ fun GenerateTeamMatchScreen(
 
         Button(
             onClick = {
-                // TODO Generate teams
+                processIntent(GenerateTeamMatchIntent.GenerateTeams)
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
