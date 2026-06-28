@@ -18,7 +18,9 @@ import com.kayevo.sportive_match.platform.ui.generate_team_match.GenerateTeamMat
 import com.kayevo.sportive_match.platform.ui.generate_team_match.GenerateTeamMatchVM
 import com.kayevo.sportive_match.platform.ui.home.HomeScreen
 import com.kayevo.sportive_match.platform.ui.theme.Sportive_matchTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val generateTeamMatchVM: GenerateTeamMatchVM by viewModels()
 
