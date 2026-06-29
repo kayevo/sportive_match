@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.kayevo.sportive_match.domain.generate_team_match.GenerateTeamMatchUC
 import com.kayevo.sportive_match.platform.ui.theme.Sportive_matchTheme
 
 val blueBallEmoji = "\uD83D\uDD35"
@@ -44,7 +45,7 @@ fun GenerateTeamMatchScreenPreview() {
     Sportive_matchTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val navController = rememberNavController()
-            val viewModel = GenerateTeamMatchVM()
+            val viewModel = GenerateTeamMatchVM(GenerateTeamMatchUC())
 
             GenerateTeamMatchScreen(
                 navController = navController,
@@ -63,7 +64,7 @@ fun GenerateTeamMatchScreenPreview() {
 @Composable
 fun GenerateTeamMatchScreen(
     navController: NavController,
-    processIntent: (GenerateTeamMatchIntent) -> Unit,
+    processIntent: (GenerateTeamMatchScreenIntent) -> Unit,
     sentCandidates: String,
     candidates: List<String>,
     team1: List<String>,
@@ -90,7 +91,7 @@ fun GenerateTeamMatchScreen(
         OutlinedTextField(
             value = sentCandidates,
             onValueChange = { newSentCandidates ->
-                processIntent(GenerateTeamMatchIntent.ChangeCandidates(newSentCandidates))
+                processIntent(GenerateTeamMatchScreenIntent.ChangeCandidates(newSentCandidates))
             },
             label = { Text("Sent candidates") },
             placeholder = {
@@ -182,7 +183,7 @@ fun GenerateTeamMatchScreen(
 
         Button(
             onClick = {
-                processIntent(GenerateTeamMatchIntent.GenerateTeams)
+                processIntent(GenerateTeamMatchScreenIntent.GenerateTeams)
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
