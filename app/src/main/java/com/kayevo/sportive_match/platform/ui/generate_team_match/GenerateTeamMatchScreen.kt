@@ -1,6 +1,7 @@
 package com.kayevo.sportive_match.platform.ui.generate_team_match
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -19,18 +21,22 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.kayevo.sportive_match.R
 import com.kayevo.sportive_match.domain.generate_team_match.GenerateTeamMatchUC
 import com.kayevo.sportive_match.platform.ui.theme.Sportive_matchTheme
 
@@ -78,13 +84,45 @@ fun GenerateTeamMatchScreen(
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
+        Row (modifier = Modifier.fillMaxWidth()) {
+            IconButton(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_back_button),
+                    contentDescription = "Back button",
+                    modifier = Modifier.width(30.dp)
+                )
+            }
 
-        Text(
-            text = "Generate Random Team Match",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
+        }
+
+        Row (modifier = Modifier.fillMaxWidth()) {
+            Spacer(modifier = Modifier.weight(1f))
+
+            Card(
+                modifier = Modifier
+            ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_handshake),
+                contentDescription = "Handshake icon",
+                modifier = Modifier
+                    .width(50.dp)
+                    .padding(10.dp)
+            )}
+
+            Text(
+                text = "Generate Random \nTeam Match",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .align(Alignment.CenterVertically),
+                textAlign = TextAlign.Start
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+        }
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -101,7 +139,7 @@ fun GenerateTeamMatchScreen(
             minLines = 3
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         Card(
             modifier = Modifier.fillMaxWidth()
@@ -133,7 +171,7 @@ fun GenerateTeamMatchScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
