@@ -1,4 +1,4 @@
-package com.kayevo.sportive_match.ui.theme
+package com.kayevo.sportive_match.platform.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
