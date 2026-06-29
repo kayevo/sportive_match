@@ -33,7 +33,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    // TODO deprecated.
+    // TODO: remove deprecated usage.
     kotlinOptions {
         jvmTarget = "17"
     }
@@ -78,6 +78,6 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    // Javax
+    // Javax / Jakarta
     implementation(libs.javax.inject)
 }
