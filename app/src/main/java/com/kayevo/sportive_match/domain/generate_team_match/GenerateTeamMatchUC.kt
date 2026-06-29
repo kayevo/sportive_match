@@ -7,7 +7,7 @@ class GenerateTeamMatchUC @Inject constructor() {
         candidates: List<String>,
         random: RandomNumberGenerator,
         teamSize: Int = 5
-    ): RandomMatch {
+    ): TeamMatch {
         val candidatesPool = candidates.toMutableList()
         val team1 = mutableListOf<String>()
         val team2 = mutableListOf<String>()
@@ -21,7 +21,8 @@ class GenerateTeamMatchUC @Inject constructor() {
             else team2.add(candidate)
         }
 
-        return RandomMatch(
+        return TeamMatch(
+            candidates = candidates.toList(),
             team1 = team1,
             team2 = team2,
             nextCandidates = candidatesPool

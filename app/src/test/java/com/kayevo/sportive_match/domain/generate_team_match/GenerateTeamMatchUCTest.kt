@@ -22,7 +22,8 @@ class GenerateTeamMatchUCTest {
     fun test_GIVEN_no_candidates_WHEN_generate_match_THEN_return_empty_match() {
         // Given
         val candidates = emptyList<String>()
-        val emptyRandomMatch = RandomMatch(
+        val emptyTeamMatch = TeamMatch(
+            candidates = emptyList(),
             team1 = emptyList(),
             team2 = emptyList(),
             nextCandidates = emptyList()
@@ -35,7 +36,7 @@ class GenerateTeamMatchUCTest {
         )
 
         // Then
-        assertEquals(expected = emptyRandomMatch, actual = randomMatch)
+        assertEquals(expected = emptyTeamMatch, actual = randomMatch)
         verify(exactly = 0) { mockRandomNumberGenerator.nextInt(any(), any()) }
     }
 
@@ -47,7 +48,8 @@ class GenerateTeamMatchUCTest {
         val candidates = mutableListOf(candidate)
         val expectedTeam1 = listOf(candidate)
 
-        val validMatch = RandomMatch(
+        val validMatch = TeamMatch(
+            candidates = candidates,
             team1 = expectedTeam1,
             team2 = emptyList(),
             nextCandidates = emptyList()
@@ -79,7 +81,8 @@ class GenerateTeamMatchUCTest {
         val expectedTeam1 = listOf(candidate2)
         val expectedTeam2 = listOf(candidate1)
 
-        val validMatch = RandomMatch(
+        val validMatch = TeamMatch(
+            candidates= candidates,
             team1 = expectedTeam1,
             team2 = expectedTeam2,
             nextCandidates = emptyList()
@@ -124,7 +127,8 @@ class GenerateTeamMatchUCTest {
         val expectedTeam1 = listOf(candidate4, candidate3)
         val expectedTeam2 = listOf(candidate1, candidate2)
 
-        val validMatch = RandomMatch(
+        val validMatch = TeamMatch(
+            candidates = candidates,
             team1 = expectedTeam1,
             team2 = expectedTeam2,
             nextCandidates = emptyList()
@@ -181,7 +185,8 @@ class GenerateTeamMatchUCTest {
         val expectedTeam2 = listOf(candidate1, candidate2)
         val expectedNextCandidates = listOf(candidate5)
 
-        val validMatch = RandomMatch(
+        val validMatch = TeamMatch(
+            candidates = candidates,
             team1 = expectedTeam1,
             team2 = expectedTeam2,
             nextCandidates = expectedNextCandidates

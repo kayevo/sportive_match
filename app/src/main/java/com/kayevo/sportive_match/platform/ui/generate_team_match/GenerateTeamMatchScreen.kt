@@ -37,7 +37,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.kayevo.sportive_match.R
+import com.kayevo.sportive_match.adapter.data.generate_team_match.TeamMatchRepoImp
 import com.kayevo.sportive_match.domain.generate_team_match.GenerateTeamMatchUC
+import com.kayevo.sportive_match.domain.generate_team_match.GetTeamMatchUC
+import com.kayevo.sportive_match.domain.generate_team_match.SetTeamMatchUC
 import com.kayevo.sportive_match.platform.ui.theme.Sportive_matchTheme
 
 val blueBallEmoji = "\uD83D\uDD35"
@@ -51,7 +54,12 @@ fun GenerateTeamMatchScreenPreview() {
     Sportive_matchTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val navController = rememberNavController()
-            val viewModel = GenerateTeamMatchVM(GenerateTeamMatchUC())
+            val teamMatchRepository = TeamMatchRepoImp()
+            val viewModel = GenerateTeamMatchVM(
+                getTeamMatch = GetTeamMatchUC(teamMatchRepository),
+                generateTeamMatch = GenerateTeamMatchUC(),
+                setTeamMatch = SetTeamMatchUC(teamMatchRepository)
+            )
 
             GenerateTeamMatchScreen(
                 navController = navController,
